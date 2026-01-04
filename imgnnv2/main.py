@@ -19,14 +19,14 @@ from inf_self import self_inference_validation
 
 parser = argparse.ArgumentParser(description="imgnn_v2 final")
 
-parser.add_argument('--train_data', default='cora_ml', choices=['cora_ml', 'CA-GrQc'])
+parser.add_argument('--train_data', default='CA-GrQc', choices=['cora_ml', 'CA-GrQc'])
 parser.add_argument('--infer_data', default='youtube', choices=['youtube', 'pokec'])
-parser.add_argument('--infer_model', default='IC', choices=['IC', 'LT'])
+parser.add_argument('--infer_model', default='IC', choices=['IC', 'LT', 'SIS'])
 parser.add_argument('--seed_size', default='1%', choices=['1%', '5%', '10%'])
-parser.add_argument('--num_subgraphs', default='500', type=int)
-parser.add_argument("--epochs", default=600, type=int)
-parser.add_argument("--batchsize", default=8, type=int)
-parser.add_argument("--learning_rate", default=5e-4, type=float)
+parser.add_argument('--num_subgraphs', default='300', type=int)
+parser.add_argument("--epochs", default=500, type=int)
+parser.add_argument("--batchsize", default=64, type=int)
+parser.add_argument("--learning_rate", default=5e-3, type=float)
 parser.add_argument("--weight_decay", default=1e-5, type=float)
 
 args = parser.parse_args()
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         
         print(f"Epoch {epoch+1}/{args.epochs} | Loss: {avg_loss:.7f} | Time: {end_time - start_time:.2f}s")
         
-        if avg_loss < 0.000001:
+        if avg_loss < 0.00001 and epoch > 100:
             print(f"Early stopping at epoch {epoch+1} with loss {avg_loss:.8f}") 
             break
         
@@ -111,8 +111,9 @@ if __name__ == "__main__":
 
     seeds = inference(dataset_name=args.train_data, txtdata_path=args.infer_data, seed_ratio=args.seed_size, infer_model=args.infer_model, device=device)
 
-    print("Start Self Inference Validation based on the (RIS)...")
-    self_inference_validation(dataset_name=args.infer_data, seed_ratio=args.seed_size, infer_model=args.infer_model)
+    if args.infer_model != 'SIS':
+        print("Start Self Inference Validation based on the (RIS)...")
+        self_inference_validation(dataset_name=args.infer_data, seed_ratio=args.seed_size, infer_model=args.infer_model)
 
     print("Inference Validation based on the evaluation in (DeepIM)....")
     
