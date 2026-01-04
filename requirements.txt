@@ -18,7 +18,7 @@ contourpy==1.1.1
 cycler==0.12.1
 datasets==3.1.0
 decorator==5.2.1
-dgl @ file:///home/zht/pyworks/dgl-2.4.0%2Bcu121-cp38-cp38-manylinux1_x86_64.whl#sha256=3a54ffb2e72cfe39b37d1fba747647e4b2edfbff07bef9d2b97889793f71812d
+dgl==2.4.0
 dill==0.3.8
 distro @ file:///croot/distro_1714488253808/work
 dynetx==0.3.2
