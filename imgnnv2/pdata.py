@@ -401,5 +401,3 @@ def generate_dataset(file_name, num_subgraphs=500, infer='IC'):
     with open(save_path, 'wb') as f:
         pickle.dump(dataset, f)
     print(f"Saved to {save_path}")
-
-
