@@ -187,7 +187,5 @@ def self_inference_validation(dataset_name, seed_ratio, infer_model='IC'):
         
         print(f"File: {os.path.basename(file_path)}")
         print(f"  - Seed Count: {len(internal_seeds)}")
-        print(f"  - Est. Spread: {spread:.4f}")
+        print(f"  - Self inf: {spread:.4f}")
         print("-" * 40)
-
-
